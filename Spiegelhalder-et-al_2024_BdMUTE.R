@@ -15,7 +15,7 @@ library(ggtext)
 
 
 ### Colourblind-friendly palettes -----------------------------------------------------------------------
-## to distinguish between genotypes (Fig. 6, Figs S6-9)
+## to distinguish between genotypes (Fig. 6, Figs S6-9 (S6-8 in final publication))
 as.vector(met.brewer("Morgenstern", n=8))
 # WT = #98768e
 # MYM = #b08ba5
@@ -27,7 +27,7 @@ as.vector(met.brewer("Morgenstern", n=8))
 # sid = #a56457
 c("#98768e", "#b08ba5", "#c7a2b6", "#dfbbc8", "#ffc680", "#ffb178", "#db8872", "#a56457")
 
-## to distinguish between phenotypes (Figs 1, 2, 3, 5, Figs S2, S5, S8)
+## to distinguish between phenotypes (Figs 1, 2, 3, 5, Figs S2, S5, S8 (S7 in final publication))
 as.vector(met.brewer("Hokusai3", n=4))
 # 2 SC = #95c36e
 # 1 SC = #d8d97a
@@ -188,7 +188,7 @@ plot2_B_C <- plot2_B_C + theme(text = element_text(size = 8),
 
 
 
-#### Fig. 2E, Fig. S2 -------------------------------------------------------------------------------------
+#### Fig. 2E, Fig. S2(A) -------------------------------------------------------------------------------------
 ### load data
 pheno3rd <- read_excel("MUTE2024_Data.xlsx", sheet = "Data_Fig2E_FigS2")
 pheno3rd <- na.omit(pheno3rd)
@@ -229,7 +229,7 @@ plot2_E <- means2 %>% mutate(phenotype = fct_relevel(phenotype, "aborted", "no_S
   theme_bw()+
   theme(strip.background = element_rect(colour=NA,fill=NA))+
   theme(axis.ticks.x = element_blank(),
-        axis.text.x = element_markdown())+
+        axis.text.x = element_markdown(angle = 45, vjust = 1.1, hjust = 1))+
   theme(legend.position = "bottom",
         legend.justification="left",
         legend.box.margin = margin(c(-16)),
@@ -242,7 +242,7 @@ plot2_E_final <- plot2_E + theme(text = element_text(size = 8),
                               legend.text = element_text(size = 8))
 
 
-### Fig. S2
+### Fig. S2(A)
 ## reorder data frame
 phenopercentages <- data.frame(line=pheno3rd$type, identifier=pheno3rd$line, individual=pheno3rd$individual, phenotype="WT", percent=pheno3rd$wt)
 phenopercentages <- rbind(phenopercentages, data.frame(line=pheno3rd$type, identifier=pheno3rd$line, individual=pheno3rd$individual, phenotype="one_SC", percent=pheno3rd$`1sub`))
@@ -355,7 +355,7 @@ plot3_D_final <- plot3_D + theme(text = element_text(size = 8),
 
 
 
-#### Fig. 3E, Fig. S3 -------------------------------------------------------------------------------------
+#### Fig. 3E, Fig. S3(D) -------------------------------------------------------------------------------------
 ### load data
 gc1 <- read_excel("MUTE2024_Data.xlsx", sheet = "Data_Fig3E_FigS3")
 gc1$SC <- as.character(gc1$SC)
@@ -397,7 +397,7 @@ plot3_E_final <- plot3_E + theme(text = element_text(size = 8),
                               legend.text = element_text(size = 8))
 
 
-### Fig. S3
+### Fig. S3(D)
 ## statistical analysis
 # ANOVA
 interlwgmc <- interaction(gc1$Genotype, gc1$Divided)
@@ -780,7 +780,7 @@ plot5_D_final <- plot5_D + theme(text = element_text(size = 8),
 
 
 
-#### Fig. 6, Figs S6, S7, S9 -------------------------------------------------------------------------------------
+#### Fig. 6, Figs S6, S7, S9 (S8 in final publication) -------------------------------------------------------------------------------------
 ### use licornetics package on the Li-6800 excel files (manually corrected by leaf area)
 
 ### Fig. 6 (physiology not corrected by stomatal density)
@@ -1201,8 +1201,8 @@ plotS7_B <- plotS7_B + theme(axis.text = element_text(size = 8),
 ggarrange(plotS7_A, plotS7_B, nrow = 2, labels = c("A", "B"), font.label = list(size = 12))
 
 
-### Fig. S9 (physiology corrected by stomatal density, i.e. physiology per stoma)
-## Densities (based on the mean density of Fig. S8C)
+### Fig. S9 (S8 in final publication) (physiology corrected by stomatal density, i.e. physiology per stoma)
+## Densities (based on the mean density of Fig. S8C (in final publication S7C))
 # line   density   
 # M3GM+  109 
 # M3GM++ 109 
@@ -1213,43 +1213,43 @@ ggarrange(plotS7_A, plotS7_B, nrow = 2, labels = c("A", "B"), font.label = list(
 # WT     105
 # sid     89
 
-## Plot S9A: Stomatal conductance (gsw) of WT, MYM, MMY and sid
+## Plot S9A (S8A in final publication): Stomatal conductance (gsw) of WT, MYM, MMY and sid
 plotS9_A <- licorplots(c("wt", "mym", "mmy", "sid"), timestamps = c(20,40,60), timeframe = c(11:75), 
                        legend_labels = c("WT", "MYM", "MMY", "*sid*"), legend_title = NULL,
                        remove_outliers = "yes", stomden = c(105, 110, 93, 89),
                        type = "gsw", colours = c("#98768e", "#b08ba5", "#db8872", "#a56457"))
 
-## Plot S9B: Stomatal conductance (gsw) of WT, M3GM (++, +, -, --) and sid
+## Plot S9B (S8B in final publication): Stomatal conductance (gsw) of WT, M3GM (++, +, -, --) and sid
 plotS9_B <- licorplots(c("wt", "LB37", "LB14", "m3gm-LB3", "LB2", "sid"), timestamps = c(20,40,60), timeframe = c(11:75), 
                        legend_labels = c("WT", "M3GM++", "M3GM+", "M3GM-", "M3GM--", "*sid*"), legend_title = NULL,
                        remove_outliers = "yes", stomden = c(105, 109, 109, 94, 96, 89),
                        type = "gsw", colours = c("#98768e", "#c7a2b6", "#dfbbc8", "#ffc680", "#ffb178", "#a56457"))
 
-## Plot S9C: Carbon assimilation (A) of WT, MYM, MMY and sid
+## Plot S9C (S8C in final publication): Carbon assimilation (A) of WT, MYM, MMY and sid
 plotS9_C <- licorplots(c("wt", "mym", "mmy", "sid"), timestamps = c(20,40,60), timeframe = c(11:59), 
                        legend_labels = c("WT", "MYM", "MMY", "*sid*"), legend_title = NULL,
                        remove_outliers = "yes", stomden = c(105, 110, 93, 89),
                        type = "A", colours = c("#98768e", "#b08ba5", "#db8872", "#a56457"))
 
-## Plot S9D: Carbon assimilation (A) of WT, M3GM (++, +, -, --) and sid
+## Plot S9D ("8D in final publication): Carbon assimilation (A) of WT, M3GM (++, +, -, --) and sid
 plotS9_D <- licorplots(c("wt", "LB37", "LB14", "m3gm-LB3", "LB2", "sid"), timestamps = c(20,40, 60), timeframe = c(11:59), 
                        legend_labels = c("WT", "M3GM++", "M3GM+", "M3GM-", "M3GM--", "*sid*"), legend_title = NULL,
                        remove_outliers = "yes", stomden = c(105, 109, 109, 94, 96, 89),
                        type = "A", colours = c("#98768e", "#c7a2b6", "#dfbbc8", "#ffc680", "#ffb178", "#a56457"))
 
-## Plot S9E: Intrinsic water-use efficiency (iWUE) of WT, MYM, MMY and sid
+## Plot S9E (only biorxiv version): Intrinsic water-use efficiency (iWUE) of WT, MYM, MMY and sid
 plotS9_E <- licorplots(c("wt", "mym", "mmy", "sid"), timestamps = c(20,40, 60), timeframe = c(11:59), 
                        legend_labels = c("WT", "MYM", "MMY", "*sid*"), legend_title = NULL,
                        remove_outliers = "yes", stomden = c(105, 110, 93, 89),
                        type = "WUE", colours = c("#98768e", "#b08ba5", "#db8872", "#a56457"))
 
-## Plot S9F: Intrinsic water-use efficiency (iWUE) of WT, M3GM (++, +, -, --) and sid
+## Plot S9F (only biorxiv version): Intrinsic water-use efficiency (iWUE) of WT, M3GM (++, +, -, --) and sid
 plotS9_F <- licorplots(c("wt", "LB37", "LB14", "m3gm-LB3", "LB2", "sid"), timestamps = c(20,40,60), timeframe = c(11:59), 
                        legend_labels = c("WT", "M3GM++", "M3GM+", "M3GM-", "M3GM--", "*sid*"), legend_title = NULL,
                        remove_outliers = "yes", stomden = c(105, 109, 109, 94, 96, 89),
                        type = "WUE", colours = c("#98768e", "#c7a2b6", "#dfbbc8", "#ffc680", "#ffb178", "#a56457"))
 
-## correct text sizes and assemble Fig. S9
+## correct text sizes and assemble Fig. S9 (S8 in final publication)
 plotS9_A_final <- plotS9_A + theme(text = element_text(size = 8),
                                  axis.text = element_text(size = 8))
 plotS9_B_final <- plotS9_B + theme(text = element_text(size = 8),
@@ -1273,7 +1273,7 @@ ggarrange(ggarrange(plotS9_A_final, plotS9_C_final, plotS9_E_final, nrow = 3,
 
 
 
-#### Fig. S8 -------------------------------------------------------------------------------------
+#### Fig. S8 (in final publication S7) -------------------------------------------------------------------------------------
 ### load data
 pheno <- read_excel("MUTE2024_Data.xlsx", sheet = "Data_FigS8")
 
@@ -1282,7 +1282,7 @@ pheno <- read_excel("MUTE2024_Data.xlsx", sheet = "Data_FigS8")
 colourblindpalette <- c("#295384", "#5a97c1", "#d8d97a", "#95c36e")
 
 
-### Fig. S8A
+### Fig. S8A (in final publication S7A)
 ## calculate means for all phenotypes for each line
 means1<- pheno %>% group_by(line) %>% 
   summarize(wt=mean(`wt-like`),
@@ -1319,7 +1319,7 @@ plotS8_A <- means2 %>% mutate(phenotype = fct_relevel(phenotype, "aborted", "no_
   labs(x=NULL,y="Percentage [%]",title=NULL)
 
 
-### Fig. S8B
+### Fig. S8B (in final publication S7B)
 ## calculate percentages for each stomatal phenotype
 pheno$percentwt <- pheno$`wt-like`/pheno$stomata
 pheno$percent1sc <- pheno$one_SC/pheno$stomata
@@ -1355,7 +1355,7 @@ plotS8_B <- ggplot(percentmeans, aes(x=factor(line, levels = c("WT", "MYM", "M3G
   labs(x=NULL, y="Percentage [%]",title=NULL)
 
 
-### Fig. S8C
+### Fig. S8C (in final publication S7C)
 ### test for significant differences in comparison to the wild type that was used in the same round
 stomden1 <- pheno %>% group_by(line, identifier, individual) %>% summarise(mean_dens= mean(stomatal_density_functional))
 
@@ -1423,7 +1423,7 @@ plotS8_C <- ggplot(stomden1, mapping=aes(x=line, y=mean_dens, colour = line))+
 
 
 
-### correct text size and assemble Fig. S8
+### correct text size and assemble Fig. S8 (in final publication S7)
 plotS8_A_final <- plotS8_A + theme(text = element_text(size = 8),
                             axis.text = element_text(size = 8),
                             legend.text = element_text(size = 8))
@@ -1441,7 +1441,7 @@ ggarrange(ggarrange(plotS8_A_final, plotS8_B_final, nrow=2, common.legend = T, l
 
 
 
-#### Fig. S10 -------------------------------------------------------------------------------------
+#### Fig. S10 (only in biorxiv version) -------------------------------------------------------------------------------------
 ### load data
 stomin <- read_excel("MUTE2024_Data.xlsx", sheet = "Data_FigS10")
 stomin <- subset(stomin, !is.na(stomin$stomatal_index))
